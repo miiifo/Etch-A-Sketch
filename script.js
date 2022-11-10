@@ -10,7 +10,7 @@ function createGrid(row){
             let grid=document.createElement("div");
             container.appendChild(grid);
             grid.classList.add('grid-element');
-            grid.addEventListener("mouseover", function(){
+            grid.addEventListener("mousedown", function(){
                 
                 //Change the color to rainbow
                 /*const r = Math.floor(Math.random() * 256);
@@ -29,8 +29,8 @@ function createGrid(row){
     } 
 }
 
-let btn=document.querySelector(".btn");
-btn.addEventListener("click",()=>{
+let range=document.querySelector("#range");
+range.addEventListener("click",()=>{
     let number=prompt("set the number of squares per side (2 to 100)");
     if (number>=2 &&number<=100){
         clearGrid();
