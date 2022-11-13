@@ -9,13 +9,26 @@
 </head>
 
 <body>
-    <header>
-        <h1>Etch-A-Sketch</h1>
-    </header>
+    <div class="main">
+        <div class="header">
+            <h1>Etch-A-Sketch</h1>
+        </div>
 
+        <div class="style-selector">
+            <div class="pen">Pen<input type="color" class="color-picker"></div>
+            <div class="bgclor">BgColor<input type="color" class="bgcolor-picker" value="#ffffff"></div>
 
-    <div class="main"></div>
-        <input type="range" id="range" min="4" max="100" value="16">
+            <div class="grid-size">
+                <p id="current-value">16×16</p>
+                <input type="range" id="range" min="8" max="100" value="16">
+            </div>
+            <button class="rainbow">Rainbow</button>
+            <button class="shading">Shading</button>
+            <button class="eraser">Eraser</button>
+            <button class="clear">Clear</button>
+
+        </div>
+        
         <div id="container"></div>
     </div>
 
