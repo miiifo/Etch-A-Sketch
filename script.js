@@ -59,9 +59,8 @@ shading.addEventListener("click",()=>{
 });
 
 eraser.addEventListener("click",()=>{
-    let grid=document.querySelector(".grid-element");
     isShading=false;
-    gridColor=grid.style.backgroundColor;
+    gridColor=bgcolorPicker.value;
     colorMode="eraser";
     checkMode(colorMode)
 });
