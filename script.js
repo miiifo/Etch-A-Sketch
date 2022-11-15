@@ -7,19 +7,19 @@ let rainbow=document.querySelector(".rainbow")
 let shading=document.querySelector(".shading")
 let eraser=document.querySelector(".eraser")
 let clear=document.querySelector(".clear")
+let pen=document.querySelector(".pen")
 let colorMode ="normal";
 let gridColor="#000000";
 let isShading=false;
-let colorDict={"normal":getGridColor, "rainbow":makeRainbow, "shading":shade, "eraser":getGridColor}
+let colorDict={"normal":getGridColor, "rainbow":makeRainbow, "eraser":getGridColor}
 let isDown = false;
 
-
 createGrid(16);
-
+checkMode(colorMode)
 
 
 range.addEventListener("mouseup",()=>{
-    clearGrid();
+    container.innerHTML="";
     createGrid(range.value);
 });
 
@@ -27,34 +27,43 @@ range.addEventListener("mouseup",()=>{
 colorPicker.addEventListener("change",(e)=>{
     gridColor=e.target.value;
     colorMode="normal";
+    checkMode(colorMode);
+});
+
+pen.addEventListener("click",()=>{
+    gridColor=colorPicker.value;
+    colorMode="normal";
+    checkMode(colorMode);
 });
 
 
 bgcolorPicker.addEventListener("change",(e)=>{
-    let grid=document.querySelectorAll(".grid-element")    
+    let grid=document.querySelectorAll(".grid-element");  
     grid.forEach(newBg=>{
         newBg.style.backgroundColor=e.target.value;
     });
 });
 
 
-rainbow.addEventListener("click",(e)=>{
+rainbow.addEventListener("click",()=>{
     colorMode="rainbow";
+    checkMode(colorMode);
 });
 
 
-shading.addEventListener("click",(e)=>{
+shading.addEventListener("click",()=>{
     isShading = !isShading
-    colorMode="shading";
+    if(isShading){
+        shading.classList.add('active');
+    }else shading.classList.remove('active');
 });
 
-
-eraser.addEventListener("click",(e)=>{
+eraser.addEventListener("click",()=>{
     let grid=document.querySelector(".grid-element");
     isShading=false;
-    
     gridColor=grid.style.backgroundColor;
     colorMode="eraser";
+    checkMode(colorMode)
 });
 
 
@@ -89,6 +98,11 @@ function createGrid(row){
         grid.addEventListener("mousedown", function(){
             isDown =true;
             grid.style.backgroundColor=colorDict[colorMode]();
+            if(isShading){
+                decreaseOpacity(grid);
+            }else{
+                grid.style.opacity=1;
+            }
         });
         grid.addEventListener("mouseover", function(){
             if(isDown){
@@ -115,16 +129,29 @@ function getGridColor(){
     return gridColor;
 }
 
-function shade(){
-    return gridColor=colorPicker.value;
-}
-
 function decreaseOpacity(e){
     if(e.style.opacity>=0){
         e.style.opacity-=.1;
     }
 }
 
-function clearGrid(){
-    container.innerHTML="";
+function checkMode(colorMode){
+    switch(colorMode){
+        case "normal":
+            pen.classList.add('active');
+            rainbow.classList.remove('active');
+            eraser.classList.remove('active');
+            break;
+        case  "rainbow":
+            pen.classList.remove('active');
+            rainbow.classList.add('active');
+            eraser.classList.remove('active');
+            break;
+        case "eraser":
+            pen.classList.remove('active');
+            rainbow.classList.remove('active');
+            eraser.classList.add('active');
+            shading.classList.remove('active');
+            break;
+    }
 }
